@@ -102,16 +102,11 @@ print("Sumatoria de distancias recorridas:", int(total_distance))
 for i in range(len(matriz_distancias)):
     print('ITERACION', i)
     print('INDICE ACTUAL', indice_actual)
-
-
     #indice_actual = np.argmin(matriz_distancias[i])
     #if df.loc[indice_actual].indice not in puntos_visitados:
         #puntos_visitados.append(df.loc[indice_actual].indice)
-
     print('-------------------------------------')
     #indice_actual = np.argmin(matriz_distancias[i])
-
-
     indice_actual = np.argmin(matriz_distancias[i])
     if df.loc[indice_actual].indice not in puntos_visitados:
         puntos_visitados.append(df.loc[indice_actual].indice)
@@ -119,15 +114,10 @@ for i in range(len(matriz_distancias)):
             
         #indice_actual = np.argmin(matriz_distancias[i])
         #print('INDICE', df.loc[np.argmin(matriz_distancias[i])])
-
      
-
-
 #print('SUMATORIA', sumatoria)
 print(matriz_distancias)
 print('PUNTOS VISITADOS', puntos_visitados)
-
-
 '''
 
 # Mientras haya puntos sin visitar, buscar el punto más cercano al punto actual y agregarlo a la ruta
@@ -191,30 +181,9 @@ print('PUNTOS VISITADOS', puntos_visitados)
 
 '''
 import matplotlib.pyplot as plt
-
 plt.scatter(df['x'], df['y'])
 plt.xlabel('Eje X')
 plt.ylabel('Eje Y')
 plt.title('Gráfico de puntos')
 plt.show()
-'''
-
-
-
-
-
-'''
-df_sub = df[df['indice'] != bob_house].reset_index(drop=True)
-#print(df_sub)
-
-dist_matrix = squareform(pdist(df_sub[['x', 'y']]))
-print(dist_matrix)
-
-mst = minimum_spanning_tree(dist_matrix)
-print(mst)
-
-#order = depth_first_order(mst, df_sub[df_sub['indice']==2].index[0])
-
-#order = [df[df['indice']==2].index[0]] + [df_sub.index[i] for i in order]
-#print(order)
 '''
