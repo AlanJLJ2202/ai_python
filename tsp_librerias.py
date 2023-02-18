@@ -1,23 +1,19 @@
 import pandas as pd
 import numpy as np
 from scipy.spatial.distance import pdist, squareform
-from scipy.sparse.csgraph import minimum_spanning_tree
-from scipy.sparse.csgraph import depth_first_order
-
-
 
 #Se declaran la cantidad de ubicaciones
 ubicaciones = 4
 
 #Se declara de donde inicia el recorrido del agente viajero
-bob_house = 2
+bob_house = 3
 
 #Se declara la matriz de distancias
 data = [
-        [1, 0, 7],
-        [2, 4, 3],
-        [3, 6, 1],
-        [4, 5, 1],
+        [1, 2, 6],
+        [2, 2, 4],
+        [3, 2, 1],
+        [4, 2, 1],
     ]
 
 df = pd.DataFrame(data, columns=['indice', 'x', 'y'])
@@ -96,94 +92,7 @@ total_distance = 0
 for i in range(len(puntos_visitados)-1):
      total_distance += euclidean_distance(df.loc[puntos_visitados[i]], df.loc[puntos_visitados[i+1]])
 
+for punto in puntos:
+    print(punto)
+
 print("Sumatoria de distancias recorridas:", int(total_distance))
-
-''''
-for i in range(len(matriz_distancias)):
-    print('ITERACION', i)
-    print('INDICE ACTUAL', indice_actual)
-    #indice_actual = np.argmin(matriz_distancias[i])
-    #if df.loc[indice_actual].indice not in puntos_visitados:
-        #puntos_visitados.append(df.loc[indice_actual].indice)
-    print('-------------------------------------')
-    #indice_actual = np.argmin(matriz_distancias[i])
-    indice_actual = np.argmin(matriz_distancias[i])
-    if df.loc[indice_actual].indice not in puntos_visitados:
-        puntos_visitados.append(df.loc[indice_actual].indice)
-            
-            
-        #indice_actual = np.argmin(matriz_distancias[i])
-        #print('INDICE', df.loc[np.argmin(matriz_distancias[i])])
-     
-#print('SUMATORIA', sumatoria)
-print(matriz_distancias)
-print('PUNTOS VISITADOS', puntos_visitados)
-'''
-
-# Mientras haya puntos sin visitar, buscar el punto más cercano al punto actual y agregarlo a la ruta
-#puntos_visitados = set()
-#puntos_visitados.add(start_point.indice)
-# print(len(df))
-
-
-# puntos_visitados = []
-# puntos_visitados.append(start_point.indice)
-
-# closest_distance = np.inf
-# closest_point = None
-# current_point = df.loc[route[-1]]
-
-# dist_matrix = squareform(pdist(df_sub[['x', 'y']]))
-# print(dist_matrix)
-
-# while len(puntos_visitados) < len(df):
-    
-    
-#     for index, row in df.iterrows():
-    
-#         print('ROW', row.indice)
-        
-
-#         if row.indice not in puntos_visitados:
-#             distance = euclidean_distance(current_point, row)
-
-#             print('PUNTO ACTUAL', current_point.indice)
-#             print('Distancia', distance)
-
-#             closest_point = row.indice
-
-#             # if distance < closest_distance:
-#             #     closest_distance = distance
-#             #     closest_point = row.indice
-#             # elif distance == closest_distance and row.indice < closest_point:
-#             #     closest_point = row.indice
-
-
-#             puntos_visitados.append(closest_point)
-#             print('PUNTOS VISITADOS', puntos_visitados)
-#             route.append(closest_point)
-#             print('route', route)
-    
-
-# # Agregar el punto de inicio a la ruta para completar el ciclo
-# route.append(start_point.indice)
-
-# # Calcular la distancia total recorrida por el agente
-# total_distance = 0
-# for i in range(len(route)-1):
-#     total_distance += euclidean_distance(df.loc[route[i]], df.loc[route[i+1]])
-
-# # Imprimir la ruta recorrida y la distancia total recorrida
-# print('Ruta recorrida: ', route)
-# print('Distancia total recorrida: ', total_distance)
-
-
-
-'''
-import matplotlib.pyplot as plt
-plt.scatter(df['x'], df['y'])
-plt.xlabel('Eje X')
-plt.ylabel('Eje Y')
-plt.title('Gráfico de puntos')
-plt.show()
-'''
