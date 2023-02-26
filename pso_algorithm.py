@@ -9,6 +9,8 @@ from deap import benchmarks
 from deap import creator
 from deap import tools
 
+import matplotlib.pyplot as plt
+
 creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
 creator.create("Particle", list, fitness=creator.FitnessMin, speed=list,
                 smin=None, smax=None, best=None)
@@ -46,11 +48,13 @@ def updateParticle(part, best, phi1, phi2):
     #finalmente actualizamos la particula 
     #part[:] = list(map(operator.add, part, part.speed))
     part[:] = part + part.speed
+    print(part)
+
 
 
 toolbox = base.Toolbox()
 #pmin y pmax es de pocision
-toolbox.register("particle", generate, size=3, pmin=-5, pmax=5, smin=-3, smax=3)
+toolbox.register("particle", generate, size=2, pmin=-4, pmax=4, smin=-3, smax=3)
 toolbox.register("population", tools.initRepeat, list, toolbox.particle)
 toolbox.register("update", updateParticle, phi1=2.0, phi2=2.0)
 toolbox.register("evaluate", benchmarks.sphere)
@@ -66,10 +70,15 @@ def main():
     logbook = tools.Logbook()
     logbook.header = ["gen", "evals"] + stats.fields
 
-    GEN = 10000
+    GEN =  2000
     best = None
 
+    fig, ax = plt.subplots()
+
     for g in range(GEN):
+        x_coords = []
+        y_coords = []
+
         for part in pop:
             part.fitness.values = toolbox.evaluate(part)
             if not part.best or part.best.fitness < part.fitness:
@@ -78,12 +87,41 @@ def main():
             if not best or best.fitness < part.fitness:
                 best = creator.Particle(part)
                 best.fitness.values = part.fitness.values
+
+               
         for part in pop:
             toolbox.update(part, best)
+            x_coords.append(part.best[0])
+            y_coords.append(part.best[1])
 
         # Gather all the fitnesses in one list and print the stats
         logbook.record(gen=g, evals=len(pop), **stats.compile(pop))
-        print(logbook.stream)
+        
+        #print(logbook.stream)
+        if g % 5 == 0:
+            ax.clear()
+
+            ax.set_xlim([-2, 2]) # Rango de valores para el eje x
+            ax.set_ylim([-2, 2]) # Rango de valores para el eje y  
+
+            #ax.set_xlim([-1, 1]) # Rango de valores para el eje x
+            #ax.set_ylim([-1, 1]) # Rango de valores para el eje y  
+
+            #ax.set_xlim([-0.5, 0.5]) # Rango de valores para el eje x
+            #ax.set_ylim([-0.5, 0.5]) # Rango de valores para el eje y  
+
+            #ax.set_xlim([-0.2, 0.2]) # Rango de valores para el eje x
+            #ax.set_ylim([-0.2, 0.2]) # Rango de valores para el eje y  
+
+
+            ax.set_facecolor('black')
+            fig.patch.set_facecolor('black')
+            ax.spines['bottom'].set_color('white')
+            ax.spines['left'].set_color('white')
+            ax.tick_params(colors='white')
+            ax.scatter(x_coords, y_coords, s=7, alpha=0.4, c=(1,1,1))
+            plt.pause(0.1)
+    plt.show()
 
     return pop, logbook, best
 

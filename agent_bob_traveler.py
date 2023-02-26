@@ -9,15 +9,6 @@ for i in range(cant_ubicaciones):
     id, x, y = map(int, input().split())
     nueva_data.append([id, x, y])
 
-
-#df = pd.DataFrame(nueva_data, columns=['indice', 'x', 'y'])
-
-# Mover las filas que coinciden con la condición a la primera posición
-#df = pd.concat([df[df['indice'] == bob_house], df[df['indice'] != bob_house]]).reset_index(drop=True)
-
-#Se calcula la matriz de distancias
-#matriz_distancias = squareform((pdist(df[['x', 'y']])))
-
 distancias = [[0.0 for j in range(cant_ubicaciones)] for i in range(cant_ubicaciones)]
 
 for i in range(cant_ubicaciones):
