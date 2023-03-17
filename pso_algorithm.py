@@ -54,7 +54,7 @@ def updateParticle(part, best, phi1, phi2):
 toolbox = base.Toolbox()
 
 #pmin y pmax es de pocision, 
-toolbox.register("particle", generate, size=2, pmin=-4, pmax=4, smin=-3, smax=3)
+toolbox.register("particle", generate, size=2, pmin=-15, pmax=15, smin=-1, smax=1)
 toolbox.register("population", tools.initRepeat, list, toolbox.particle)
 toolbox.register("update", updateParticle, phi1=2.0, phi2=2.0)
 toolbox.register("evaluate", benchmarks.sphere)
@@ -72,7 +72,7 @@ def main():
     logbook.header = ["gen", "evals"] + stats.fields
 
     # número de generaciones (Puedes cambiarlo para ver como se comporta)
-    GEN =  2000
+    GEN =  100
     best = None
 
     # se crea la figura y los ejes para la gráfica
@@ -82,7 +82,6 @@ def main():
         # se crean dos colecciones vacías para guardar los valores de X y de Y
         x_coords = []
         y_coords = []
-
         # Se evalua cada particula en la poblacion, se actualiza el mejor de la particula y el mejor de la poblacion
         for part in pop:
             part.fitness.values = toolbox.evaluate(part)
@@ -92,7 +91,6 @@ def main():
             if not best or best.fitness < part.fitness:
                 best = creator.Particle(part)
                 best.fitness.values = part.fitness.values
-
         # Se actualiza la velocidad y la posicion de cada particula, se agregan los valores de X y Y a las colecciones
         for part in pop:
             toolbox.update(part, best)
@@ -102,34 +100,18 @@ def main():
         # Se actualiza el logbook, se agregan los valores de la generacion actual
         logbook.record(gen=g, evals=len(pop), **stats.compile(pop))
         
-        #print(logbook.stream)
-
-        # cada cinco generaciones se actualizan las partículas en la gráfica
-        if g % 5 == 0:
-            ax.clear()
-
-            # intenta calándole con el primer rango y después va comentando y les comentando para que pruebes en diferentes medidas
-            ax.set_xlim([-2, 2]) # Rango de valores para el eje x
-            ax.set_ylim([-2, 2]) # Rango de valores para el eje y  
-
-            #ax.set_xlim([-1, 1]) # Rango de valores para el eje x
-            #ax.set_ylim([-1, 1]) # Rango de valores para el eje y  
-
-            #ax.set_xlim([-0.5, 0.5]) # Rango de valores para el eje x
-            #ax.set_ylim([-0.5, 0.5]) # Rango de valores para el eje y  
-
-            #ax.set_xlim([-0.2, 0.2]) # Rango de valores para el eje x
-            #ax.set_ylim([-0.2, 0.2]) # Rango de valores para el eje y  
-
+        ax.clear()
+        ax.set_xlim([-15, 15]) # Rango de valores para el eje x
+        ax.set_ylim([-15, 15]) # Rango de valores para el eje y  
 
             #esto es más para el estilo de la gráfica asignar un fondo negro y los puntos blancos
-            ax.set_facecolor('black')
-            fig.patch.set_facecolor('black')
-            ax.spines['bottom'].set_color('white')
-            ax.spines['left'].set_color('white')
-            ax.tick_params(colors='white')
-            ax.scatter(x_coords, y_coords, s=7, alpha=0.4, c=(1,1,1))
-            plt.pause(0.1)
+        ax.set_facecolor('black')
+        fig.patch.set_facecolor('black')
+        ax.spines['bottom'].set_color('white')
+        ax.spines['left'].set_color('white')
+        ax.tick_params(colors='white')
+        ax.scatter(x_coords, y_coords, s=7, alpha=0.4, c=(1,1,1))
+        plt.pause(0.2)
     plt.show()
 
     #Se retorna la poblacion, el logbook y el mejor
@@ -138,4 +120,4 @@ def main():
 
 if __name__ == "__main__":
     pop, logbook, best = main()
-    print(best)
+    print('MEJOR OBTENIDO', best)
