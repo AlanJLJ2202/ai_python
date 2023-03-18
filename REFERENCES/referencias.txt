@@ -1,0 +1,6 @@
+k-means algorithm applied to image classification and processing
+https://www.unioviedo.es/compnum/labs/new/kmeans.html
+
+K-means clustering
+https://en.wikipedia.org/wiki/K-means_clustering
+
